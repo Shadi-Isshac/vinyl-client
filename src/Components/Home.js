@@ -42,8 +42,8 @@ export const Home = () => {
   if(vinylList.length > 0) {
   vinylDisplay = vinylList.map((vinyl, i) => {
     return (
-     <Link to= {`/vinyl/${vinyl._id}`}>
-     <li key = {i}>{`${vinyl.artistName} ${vinyl.albumName}`}</li> </Link>
+     <Link to= {`/vinyl/${vinyl._id}`} key = {i}>
+     <li> {`${vinyl.artistName} ${vinyl.albumName}`}</li> </Link>
     )
   })
   }

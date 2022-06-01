@@ -32,7 +32,8 @@ export const Vinyl = () => {
       artistName: artist,
       albumName: album
       })
-    } ).then((newVinyl) => setVinyl(newVinyl.vinyl))
+    } ).then(res => res.json())
+    .then((newVinyl) => setVinyl(newVinyl.vinyl))
     setArtist("")
     setAlbum("")
   }
