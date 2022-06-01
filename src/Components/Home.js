@@ -1,5 +1,6 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 
 
@@ -41,7 +42,8 @@ export const Home = () => {
   if(vinylList.length > 0) {
   vinylDisplay = vinylList.map((vinyl, i) => {
     return (
-      <li key = {i}>{`${vinyl.artistName} ${vinyl.albumName}`}</li>
+     <Link to= {`/vinyl/${vinyl._id}`}>
+     <li key = {i}>{`${vinyl.artistName} ${vinyl.albumName}`}</li> </Link>
     )
   })
   }

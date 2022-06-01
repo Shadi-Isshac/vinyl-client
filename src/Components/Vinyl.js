@@ -7,14 +7,13 @@ export const Vinyl = () => {
   const [vinyl, setVinyl] = useState([])
   const [artist, setArtist] = useState("")
   const [album, setAlbum] = useState("")
-  const [refresh, setRefresh] = useState(0)
   const id = useParams().id
 
   useEffect(() => {
     fetch(`http://localhost:3000/vinyls/${id}`)
     .then((res) => res.json())
     .then((data) => setVinyl(data.vinyl))
-  },[refresh])
+  },[])
 
   const handleArtistChange = (event) => {
     setArtist(event.target.value)
@@ -33,7 +32,7 @@ export const Vinyl = () => {
       artistName: artist,
       albumName: album
       })
-    } ).then(setRefresh(refresh + 1))
+    } ).then((newVinyl) => setVinyl(newVinyl.vinyl))
     setArtist("")
     setAlbum("")
   }
