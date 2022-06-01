@@ -7,12 +7,13 @@ export const Home = () => {
   const [vinylList, setVinylList] = useState([])
   const [artist, setArtist] = useState("")
   const [album, setAlbum] = useState("")
+  const [refresh, setRefresh] = useState(0)
   
-useEffect(() => {
+  useEffect(() => {
     fetch("http://localhost:3000/vinyls/")
-    
+    .then((res) => res.json())
     .then((data) => setVinylList(data.vinyls))
-  },[])
+  },[refresh])
 
   const handleArtistChange = (event) => {
     setArtist(event.target.value)
@@ -26,11 +27,12 @@ useEffect(() => {
     event.preventDefault()
     fetch("http://localhost:3000/vinyls/" ,{
       method: "POST",
+      headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
       artistName: artist,
       albumName: album
       })
-    } ).then((res) => console.log(res))
+    } ).then(setRefresh(refresh + 1))
     setArtist("")
     setAlbum("")
   }
