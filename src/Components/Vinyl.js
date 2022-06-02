@@ -1,6 +1,7 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+
 
 
 export const Vinyl = () => {
@@ -8,6 +9,7 @@ export const Vinyl = () => {
   const [artist, setArtist] = useState("")
   const [album, setAlbum] = useState("")
   const id = useParams().id
+  let navigate = useNavigate()
 
   useEffect(() => {
     fetch(`http://localhost:3000/vinyls/${id}`)
@@ -39,8 +41,10 @@ export const Vinyl = () => {
   }
   
   const handleDelete = event => {
-
-  }
+    fetch(`http://localhost:3000/vinyls/${id}` ,{
+      method: "DELETE",}).then(navigate('/', {replace: true}))
+    } 
+  
   
   let vinylDisplay = ""
   if(vinyl) {

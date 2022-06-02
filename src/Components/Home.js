@@ -8,13 +8,16 @@ export const Home = () => {
   const [vinylList, setVinylList] = useState([])
   const [artist, setArtist] = useState("")
   const [album, setAlbum] = useState("")
-  const [refresh, setRefresh] = useState(0)
-  
-  useEffect(() => {
-    fetch("http://localhost:3000/vinyls/")
-    .then((res) => res.json())
+  const fetchVinyls = () => {
+    fetch("http://localhost:3000/vinyls")
+    .then((response) => response.json())
     .then((data) => setVinylList(data.vinyls))
-  },[refresh])
+  }
+
+
+
+
+  useEffect(() => fetchVinyls(),  [])
 
   const handleArtistChange = (event) => {
     setArtist(event.target.value)
@@ -26,17 +29,19 @@ export const Home = () => {
   
   const handleSubmit = (event) => {
     event.preventDefault()
-    fetch("http://localhost:3000/vinyls/" ,{
+    fetch("http://localhost:3000/vinyls" ,{
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify({
       artistName: artist,
       albumName: album
       })
-    } ).then(setRefresh(refresh + 1))
-    setArtist("")
-    setAlbum("")
-  }
+    }).then(() => {
+      setArtist("")
+      setAlbum("")
+      fetchVinyls()
+    })
+    }
   
   let vinylDisplay = ""
   if(vinylList.length > 0) {
